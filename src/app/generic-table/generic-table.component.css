@@ -1,0 +1,12 @@
+th {
+    cursor: pointer;
+}
+
+td {
+    width: 33%;
+}
+
+ .options {
+     display: flex;
+     padding: 1px;
+ }

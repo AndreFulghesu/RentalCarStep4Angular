@@ -1,0 +1,25 @@
+<app-menu></app-menu>
+<div class="login-container d-flex align-items-center justify-content-center" style="margin-top: 5%;">
+
+ 
+    <form #myForm="ngForm" class="shadow-sm p-3 mb-5 bg-white rounded-lg">
+        <div class="form-group">
+            <label for="data_inizio">Seleziona la data di inizio:</label>
+            <input type="date" id="data_inizio"  name="startBooking" [(ngModel)]="editBooking.startBooking"
+                   aria-describedby="dateHelp">
+        </div>
+        <div class="form-group">
+            <label for="data_fine">Seleziona la data di resa:</label>
+            <input type="date" id="data_fine"  name="endBooking" aria-describedby="dateHelp" [(ngModel)]="editBooking.endBooking">
+        </div>
+        <div *ngIf = "period > two_days_milliseconds; else elseBlock">
+        <app-generic-button [buttonConfig]="confirmButton" ></app-generic-button>
+        </div>
+        <ng-template #elseBlock>
+            <p class="text-danger">Impossibile modificare la prenotazione a 2 giorni prima.</p>
+            <p *ngIf="errorMessage.length > 0">{{errorMessage}}</p>
+        </ng-template>
+        <br>
+    </form>
+
+</div>

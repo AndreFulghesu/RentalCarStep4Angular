@@ -1,0 +1,40 @@
+<app-menu></app-menu>
+<p class="text text-success d-flex align-items-center justify-content-center">{{updated}}</p>
+
+
+
+<div class="login-container d-flex align-items-center justify-content-center" style="margin-top: 5%;">
+
+    
+    
+
+    <form #myForm="ngForm"  class="shadow-sm p-3 mb-5 bg-white rounded-lg" style="width: 25%">
+        <div class="form-group">
+            <label for="nome">Nome:</label>
+            <input  type="text" class="form-control" [(ngModel)]="service.currentUser.nome" id="nome" name="nome" aria-describedby="nameHelp" >
+        </div>
+        <div class="form-group">
+            <label for="cognome">Cognome:</label>
+            <input  type="text" class="form-control" [(ngModel)]="service.currentUser.cognome" id="cognome" name="cognome" aria-describedby="nameHelp" >
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input  type="email" class="form-control" [(ngModel)]="service.currentUser.email" id="email" name="email" aria-describedby="secondNameHelp" >
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input  type="password" class="form-control" [(ngModel)]="new_password"   name="password" id="password" >
+        </div>
+        <div class="form-group">
+            <label for="data_nascita">Data di nascita:</label>
+            <input  type="date" class="form-control" [(ngModel)]="service.currentUser.dataNascita" name="data_nascita" id="data_nascita" >
+        </div>
+        
+        <app-generic-button [buttonConfig]="addUserButton" [data]="service.currentUser"></app-generic-button>
+
+        <div *ngIf="errorMessage != null"><p class="text-danger">{{errorMessage}}</p></div>
+        
+        <br>
+    </form>
+
+</div>

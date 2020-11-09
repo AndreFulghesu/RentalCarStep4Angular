@@ -1,0 +1,127 @@
+
+<app-menu></app-menu>
+<div class="container-fluid" style="margin-top: 5%;">
+
+    <div *ngIf="confirmMessage != null">
+        <p class="text-success">{{confirmMessage.text}}</p>
+    </div>
+
+    <a href="#" *ngIf="token.getUser().roles === 1" data-toggle="modal" class="btn btn-info" data-target="#myModal2">Aggiungi veicolo...</a>
+
+     <!-- popUp per aggiungere un'auto-->
+     <div class="modal" tabindex="-1" role="dialog" id="myModal2">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Aggiungi Auto</h5>
+                    <button type="button" class="close" (click)="refresh()" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <!-- form dentro il popUp per aggiungere un'auto -->
+                <div class="modal-body">
+                    <form class="shadow-sm p-3 mb-5 bg-white rounded-lg" #mezzoForm="ngForm">
+                        <div class="form-group">
+                            <label for="casaCostruttrice">Casa costruttrice:</label>
+                            <input type="text" class="form-control" id="casaCostruttrice"
+                                   name="homeManufacturer"
+                                   placeholder="Fiat..." aria-describedby="nameHelp" ngModel>
+                        </div>
+                        <div class="form-group">
+                            <label for="modello">Modello:</label>
+                            <input type="text" class="form-control" id="modello"
+                                   placeholder="500..." name="model"
+                                   aria-describedby="secondNameHelp" ngModel>
+                        </div>
+                        <div class="form-group">
+                            <label for="targa">Targa:</label>
+                            <input type="text" class="form-control" id="targa" name="plate"
+                                   aria-describedby="secondNameHelp"
+                                   placeholder="" ngModel>
+                        </div>
+                        <div class="form-group">
+                            <label for="annoImmatricolazione">Data di immatricolazione:</label>
+                            <input type="date" id="annoImmatricolazione"
+                                   name="registrationYear"
+                                   aria-describedby="dateHelp" ngModel>
+                        </div>
+                        <div class="form-group">
+                            <select class="custom-select" id="tipologiaVeicolo" name="vehicleType" ngModel>
+                                <option selected>Tipologia veicolo...</option>
+                                <option value="BERLINA">Berlina</option>
+                                <option value="CITYCAR">City Car</option>
+                                <option value="CABRIOLET">Cabriolet</option>
+                                <option value="MONOVOLUME">Monovolume</option>
+                                <option value="SPORTIVA">Sportiva</option>
+                                <option value="STATIONWAGON">Station Wagon</option>
+                                <option value="SUV">SUV</option>
+                                <option value="FURGONE">Furgone</option>
+                            </select>
+                        </div>
+                        <app-generic-button [buttonConfig]="addButton" [data]="mezzoForm.value"></app-generic-button>
+                        <div *ngIf="creata === true"><p class="text-success">Auto creata con successo</p></div>
+                        <div *ngIf="errorMessage != null"><p class="text-danger">{{errorMessage}}</p></div>
+                        <br>
+                    </form>
+
+                </div>
+                <div class="modal-footer"></div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="row row-cols-2" style="width: 90%; padding: 10px;">
+
+        <div *ngIf="cars.length === 0">
+            <p class="text-danger mx-auto">
+                Non ci sono ancora veicoli.
+            </p>
+        </div>
+
+        
+
+            <div class="col-6 border-right-0  border-bottom-0 border-top-0  border border-info "
+                 style="margin-top: 10px; padding: 5px;" *ngFor="let mezzo of cars">
+
+                <div class="media border border-dark" style="padding: 5px;">
+                    <img src=""
+                         class="align-self-start mr-3" width="300" height="250">
+                    <ul class="list-group list-group-flush" style=" width:100%; padding: 5px">
+                        <li class="list-group-item">Casa costruttrice:
+                            <strong>{{mezzo.homeManufacturer}}</strong>
+                        </li>
+                        <li class="list-group-item">Modello: <strong>{{mezzo.model}}</strong></li>
+                        
+                        <li class="list-group-item">Targa: <strong>{{mezzo.plate}}</strong></li>
+
+                            
+                            <td *ngIf="token.getUser().roles === 1" class="list-group-item border-0" >
+                                <app-generic-button [buttonConfig]="editButton" [data]="mezzo" >
+                                    
+                                </app-generic-button>
+                            </td>
+                            <td *ngIf="token.getUser().roles === 0" class="list-group-item border-0"> 
+                                <app-generic-button [buttonConfig]="prenotaButton" [data]="mezzo">
+                                        
+                                </app-generic-button>
+                            </td>
+                            
+
+                    </ul>
+                </div>
+
+                <div *ngIf="token.getUser().roles === 1"  class="col-6" style="margin-top: 10px; padding: 5px;"> <!--Anche quiiiiiiii-->
+                    <button class="btn btn-danger" (click)="deleteVeicle(mezzo)">X</button>
+                    Elimina Veicolo
+                </div>
+
+            </div>
+
+            
+
+    </div>
+
+</div>
+

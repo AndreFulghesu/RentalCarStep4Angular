@@ -1,0 +1,82 @@
+<app-menu></app-menu>
+<div class="container-fluid d-flex align-items-center justify-content-center">
+
+    <div class="row row-cols-1 text-center"  style="width: 80%; padding: 10px; margin-top: 3%;">
+
+        <app-generic-button *ngIf="token.getUser().roles === 1" [buttonConfig]="addUserButton"></app-generic-button>
+
+
+        <div *ngIf="token.getUser().roles === 1" class="row  border border-dark border-left-0 border-right-0 border-bottom-0 row-cols-1 text-center" style="margin-left: 0.2%; margin-top: 1%; padding: 1%;">
+      
+            <div class="col">
+                <select style="margin-top:2%;" [(ngModel)]="selection" name="selection" class="form-control">
+                    <option selected>Scegli...</option>
+                    <option value="tutti">Tutti</option>
+                    <option value="nome">Nome</option>
+                    <option value="cognome">Cognome</option>
+                </select>
+            </div>
+            <div class="col">
+            <input class="form-control" type="text" style="margin-top: 2%;" name="name" [(ngModel)]="name" (ngModelChange)="search()"
+            placeholder="Cerca un utente...">
+            </div>
+        </div>
+    
+        <div *ngIf="token.getUser().roles === 0" class="row border border-dark border-left-0 border-right-0 border-bottom-0 row-cols-1 text-center" style="margin-left: 0.2%; margin-top: 1%; padding: 1%;">
+          
+            <div class="col">
+                <select style="margin-top:2%;" [(ngModel)]="selezione" name="selezione" class="form-control">
+                    <option selected>Scegli...</option>
+                    <option value="tutti">Tutti</option>
+                    <option value="targa">Targa Auto</option>
+                </select>
+            </div>
+            <div class="col">
+            <input class="form-control" type="text" style="margin-top: 2%;" name="nome" [(ngModel)]="nome" (ngModelChange)="search()"
+            placeholder="Cerca una prenotazione...">
+            </div>
+        </div>
+
+
+        <app-generic-table *ngIf="token.getUser().roles === 1" [tableConfig]="myTable"  [data] = "users" [start_page]="pagina"  [items_per_page]="rows"></app-generic-table>
+
+
+        <app-generic-button [buttonConfig]="addBookingButton" *ngIf="token.getUser().roles === 0"></app-generic-button>
+
+        <div class="col border border-info shadow-sm p-3 mb-5 bg-white" style="margin-top: 1%; width: 40%" *ngIf="token.getUser().roles === 0">
+            <div *ngIf="bookings.length === 0">
+                <p class="text-danger mx-auto">
+                    Non ci sono ancora prenotazioni.
+                </p>
+            </div>
+            <ul class="list-group list-group-flush" *ngFor="let prenot of bookings | paginate: {itemsPerPage: rows, currentPage:pagina}">
+                <li class="list-group-item">Prenotazione:<strong> {{loggato.username}}</strong></li>
+                <li class="list-group-item">Data:  <strong>{{prenot.startBooking |date:'dd/MM/yyyy'}} al {{prenot.endBooking |date:'dd/MM/yyyy'}}</strong></li>
+                <li class="list-group-item">Auto: <strong>{{prenot.veicle.homeManufacturer}}  {{prenot.veicle.model}} </strong></li>
+                <li class="list-group-item" *ngIf="prenot.status === 0"><app-generic-button [buttonConfig]="modifyBookingUser"   [data]="prenot"></app-generic-button></li>
+                <li class="list-group-item" *ngIf="prenot.status === 0"><app-generic-button [buttonConfig]="deleteBookingUser"  [data]="prenot"></app-generic-button></li>
+                <!--status prenotazione -->
+                <div *ngIf="prenot.status === 0">
+                    <p class="text-warning">Prenotazione non confermata</p>
+                </div>
+                <div *ngIf="prenot.status === 1">
+                    <p class="text-success">Prenotazione confermata</p>
+                </div>
+            </ul>
+            <pagination-controls (pageChange)="pagina = $event"></pagination-controls>
+        </div>
+
+        <div class="form-group" style="width: 33%;">
+            <select class="custom-select" [(ngModel)]="rows">
+                <option selected>Numero righe</option>
+                <option value="2">2</option>
+                <option value="4">4</option>
+                <option value="6">6</option>
+                
+            </select>
+        </div>
+    </div>
+</div>
+
+
+

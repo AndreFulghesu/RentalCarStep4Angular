@@ -1,0 +1,46 @@
+<app-menu></app-menu>
+
+
+<div class="login-container d-flex align-items-center justify-content-center" style="margin-top: 5%;">
+
+    <form class="shadow-sm p-3 mb-5 bg-white rounded-lg">
+        <div class="form-group">
+            <label for="casa1">Casa costruttrice:</label>
+            <input type="text" class="form-control" id="casa1" [(ngModel)]="service.currentVeicle.homeManufacturer"  name="homeManufacturer"
+                   placeholder="Fiat..." aria-describedby="nameHelp">
+        </div>
+        <div class="form-group">
+            <label for="modello1">Modello:</label>
+            <input type="text" class="form-control" [(ngModel)]="service.currentVeicle.model" id="modello1"
+                   placeholder="500..." name="model" 
+                   aria-describedby="secondNameHelp">
+        </div>
+        <div class="form-group">
+            <label for="targa1">Targa:</label>
+            <input type="text" class="form-control" [(ngModel)]="service.currentVeicle.plate"  id="targa1" name="plate"
+                   aria-describedby="secondNameHelp"
+                   placeholder="">
+        </div>
+        <div class="form-group">
+            <label for="data_immatricolazione1">Data di immatricolazione:</label>
+            <input type="date" id="data_immatricolazione1" [(ngModel)]="service.currentVeicle.registrationYear"  name="registrationYear"
+                   aria-describedby="dateHelp">
+        </div>
+        <div class="form-group">
+            <select class="custom-select" [(ngModel)]="service.currentVeicle.vehicleType"    name="vehicleType">
+                <option selected>Tipologia veicolo...</option>
+                <option value="BERLINA">Berlina</option>
+                <option value="CITYCAR">City Car</option>
+                <option value="CABRIOLET">Cabriolet</option>
+                <option value="MONOVOLUME">Monovolume</option>
+                <option value="SPORTIVA">Sportiva</option>
+                <option value="STATIONWAGON">Station Wagon</option>
+                <option value="SUV">SUV</option>
+                <option value="FURGONE">Furgone</option>
+            </select>
+        </div>
+        <app-generic-button [buttonConfig]="updateVeicleButton" [data]="service.currentVeicle"></app-generic-button>
+        <br>
+    </form>
+
+</div>

@@ -1,0 +1,34 @@
+
+
+
+
+<table class="table table-hover table-borderless" style="margin-top: 1%; width: 90%;">
+    <thead class="thead-dark">
+    <th  *ngFor="let column of tableConfig.header" (click)="sort(column.key)">{{column.label}} <span *ngIf="column.sortable === true">▼</span></th>
+    </thead>
+    <tbody>
+
+        <tr *ngFor="let object of data |  orderBy: key: reverse | paginate: {itemsPerPage: items_per_page, currentPage: start_page}">
+            <td scope="col" class="border-top border-dark" *ngFor="let g of tableConfig.header">
+                <strong>{{object[g.key]}} </strong>
+
+                
+            </td>
+
+            <td  *ngFor="let button of tableConfig.buttonConfig">
+                
+                <app-generic-button class="options"  [buttonConfig] = "button"  [data]="object" ></app-generic-button>
+                           
+            </td>
+
+            
+
+            
+
+        </tr>
+        
+        
+    </tbody>
+    
+</table>
+<pagination-controls (pageChange)="start_page = $event"></pagination-controls>

@@ -1,0 +1,17 @@
+<app-menu></app-menu>
+
+<div class="container-fluid" style="margin-top: 5%;">
+
+
+    <div class="row row-cols-1 justify-content-center"   style=" padding: 5px;">
+    
+    <h5 class="text-info p-3">{{userSelected.nome}} {{userSelected.cognome}}</h5>
+    <p class="text-success">{{this.bookingService.updateMessage}}</p>
+
+    <app-generic-table [tableConfig]="myTable" [start_page]="current_page" [items_per_page]="items_per_page"  [data] ="tableData"></app-generic-table>
+
+    </div>
+
+
+
+</div>
